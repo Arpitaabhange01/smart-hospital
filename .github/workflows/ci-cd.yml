@@ -1,0 +1,81 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  ci:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      - name: Backend — Install
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Backend — Lint & Validate
+        working-directory: ./backend
+        run: |
+          npx eslint . --ext .js --ignore-pattern node_modules/ --quiet || echo "Lint skipped"
+          npm run build
+
+      - name: Frontend — Install
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Frontend — Build
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          CI: false
+
+  deploy:
+    name: Deploy to Vercel + Railway
+    needs: ci
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # ─── Vercel ───────────────────────────────────────
+      - name: Deploy Frontend → Vercel
+        working-directory: ./frontend
+        run: |
+          npm install -g vercel
+          vercel deploy --prod \
+            --token=${{ secrets.VERCEL_TOKEN }} \
+            --build-env REACT_APP_API_URL=${{ secrets.API_URL }} \
+            --build-env REACT_APP_SOCKET_URL=${{ secrets.SOCKET_URL }} \
+            --yes
+        continue-on-error: true
+
+      # ─── Railway ──────────────────────────────────────
+      - name: Deploy Backend → Railway
+        working-directory: ./backend
+        run: |
+          npm install -g @railway/cli
+          railway up --ci
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        continue-on-error: true

@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["nodejs", "nodePackages.pnpm"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["echo 'No build step required'"]
+
+[start]
+cmd = "node server.js"

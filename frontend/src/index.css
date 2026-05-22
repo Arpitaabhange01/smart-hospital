@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0f4c81;
+  --primary-light: #1a7fc1;
+  --accent: #00c9a7;
+  --bg: #f4f8ff;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: #1a1a2e;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Dark Mode ──────────────────────────── */
+.dark body { background: #0f172a; color: #e2e8f0; }
+.dark .bg-gray-50 { background-color: #1e293b !important; }
+.dark .bg-white { background-color: #1e293b !important; }
+.dark .text-gray-900 { color: #f1f5f9 !important; }
+.dark .text-gray-800 { color: #e2e8f0 !important; }
+.dark .text-gray-700 { color: #cbd5e1 !important; }
+.dark .text-gray-600 { color: #94a3b8 !important; }
+.dark .text-gray-500 { color: #64748b !important; }
+.dark .text-gray-400 { color: #475569 !important; }
+.dark .border-gray-100 { border-color: #334155 !important; }
+.dark .border-gray-200 { border-color: #475569 !important; }
+.dark .bg-gray-100 { background-color: #334155 !important; }
+.dark .bg-gray-200 { background-color: #475569 !important; }
+.dark .shadow-card { box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3) !important; }
+.dark .shadow-card-hover { box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important; }
+.dark .bg-hero-gradient { background: linear-gradient(135deg, #0c1929 0%, #0f2744 40%, #1a3a5c 100%) !important; }
+.dark .bg-card-gradient { background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important; }
+
+/* ── Scrollbar ───────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+.dark ::-webkit-scrollbar-track { background: #1e293b; }
+::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 3px; }
+
+/* ── Animation delays ────────────────────── */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+
+/* ── Utility ─────────────────────────────── */
+.opacity-0 { opacity: 0; }
+
+/* ── Input / Select dark overrides ───────── */
+.dark input, .dark select, .dark textarea { background-color: #0f172a !important; border-color: #475569 !important; color: #e2e8f0 !important; }
+.dark input:focus, .dark select:focus, .dark textarea:focus { border-color: #3b82f6 !important; }
+.dark input::placeholder, .dark textarea::placeholder { color: #475569 !important; }
+
+/* ── Table dark ──────────────────────────── */
+.dark table thead tr { background-color: #0f172a !important; }
+.dark table tbody tr { border-color: #334155 !important; }
+.dark table tbody tr:hover { background-color: #1e293b !important; }
+.dark td, .dark th { color: #e2e8f0 !important; }
