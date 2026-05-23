@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const Doctor = require('../models/Doctor');
 const Appointment = require('../models/Appointment');
@@ -13,6 +13,13 @@ const AuditLog = require('../models/AuditLog');
 
 exports.seed = async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(500).json({
+        success: false,
+        message: 'MongoDB is not connected. Make sure MONGO_URI is set in Railway Variables.',
+      });
+    }
+
     const existingUsers = await User.countDocuments();
     if (existingUsers > 0) {
       const { seedKey } = req.query;
