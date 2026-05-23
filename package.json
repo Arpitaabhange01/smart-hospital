@@ -2,7 +2,9 @@
   "name": "smart-hospital",
   "private": true,
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "build": "cd frontend && npm ci && npm run build",
+    "install": "cd frontend && npm ci"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
