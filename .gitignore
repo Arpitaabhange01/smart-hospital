@@ -11,3 +11,6 @@ uploads/*
 .idea/
 *.swp
 *.swo
+
+.vercel
+.env*

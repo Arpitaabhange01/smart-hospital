@@ -56,6 +56,8 @@ app.use('/api/ipd', require('./routes/ipdRoutes'));
 app.use('/api/audit', require('./routes/auditRoutes'));
 app.use('/api/queue', require('./routes/queueRoutes'));
 
+app.get('/api/seed', require('./controllers/seedController').seed);
+
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: '🏥 Smart Hospital API is running!', timestamp: new Date() });
 });
