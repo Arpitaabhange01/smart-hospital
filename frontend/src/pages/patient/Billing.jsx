@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CreditCard, FileText, Download, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { CreditCard, CheckCircle, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import API from '../../utils/api';
 import toast from 'react-hot-toast';

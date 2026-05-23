@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Stethoscope, MapPin, Clock, DollarSign, ChevronRight, Loader } from 'lucide-react';
+import { MapPin, DollarSign, ChevronRight, Loader } from 'lucide-react';
 import API from '../../utils/api';
 import toast from 'react-hot-toast';
 

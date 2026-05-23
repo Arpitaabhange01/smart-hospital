@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Building2, Plus, LogOut, User, Calendar, Activity } from 'lucide-react';
+import { Building2, Plus, LogOut, User } from 'lucide-react';
 import toast from 'react-hot-toast';
 import API from '../../utils/api';
 
