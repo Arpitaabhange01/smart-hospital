@@ -36,21 +36,24 @@ git push -u origin main
 ## Step 3 — Deploy Backend on Railway
 
 1. Go to [Railway](https://railway.app) → **New Project** → **Deploy from GitHub repo**
-2. Select your repo → Railway auto-detects Node.js
-3. Go to the deployed project's **Variables** tab and add:
+2. Select your repo
+3. **⚠️ CRITICAL**: In the **Root Directory** field, type or select `backend`
+   (Your code is in a monorepo — backend code lives in `backend/`. Without this, Railway won't find `package.json`.)
+4. Railway detects Node.js and starts deploying
+5. Once deployed, go to the **Variables** tab and add:
 
 | Variable | Value |
 |---|---|
 | `MONGO_URI` | Your MongoDB Atlas connection string |
 | `JWT_SECRET` | A random 64-char string (`openssl rand -hex 32`) |
-| `CLIENT_URL` | Your Vercel URL (add after step 4) |
+| `CLIENT_URL` | Your Vercel URL (add after step 5) |
 | `EMAIL_USER` | Gmail address for sending OTPs |
 | `EMAIL_PASS` | Gmail app password |
 | `NODE_ENV` | `production` |
 
-4. Once deployed, copy the **Generated Domain** (e.g. `https://smart-hospital-backend.up.railway.app`)
+6. Once deployed, copy the **Generated Domain** (e.g. `https://smart-hospital-backend.up.railway.app`)
 
-## Step 4 — Deploy Frontend on Vercel
+## Step 5 — Deploy Frontend on Vercel
 
 ### Option A — Auto-deploy from GitHub (recommended)
 1. Go to [Vercel](https://vercel.com) → **Add New Project** → Import your GitHub repo
@@ -59,7 +62,7 @@ git push -u origin main
 
 | Variable | Value |
 |---|---|
-| `REACT_APP_API_URL` | Your Railway backend URL (from step 3) |
+| `REACT_APP_API_URL` | Your Railway backend URL (from step 4) |
 | `REACT_APP_SOCKET_URL` | Same as above |
 
 4. Click **Deploy** — Vercel auto-builds and deploys on every push
@@ -72,20 +75,28 @@ npx vercel --prod \
   --build-env REACT_APP_SOCKET_URL=https://your-backend.railway.app
 ```
 
-## Step 5 — Update Railway Variable
+## Step 6 — Update Railway Variable
 
 Go back to Railway → **Variables** → Update `CLIENT_URL` to your Vercel URL.
 
-## Step 6 — Seed the Database (One Time)
+## Step 7 — Seed the Database (One Time)
 
-From your local machine:
+### Option A — Via Railway Web Shell (easiest)
+1. Go to Railway dashboard → your project → **Shell** tab
+2. Type: `node seed.js`
+3. Press Enter
+
+### Option B — Via Railway CLI
 ```bash
-cd backend
-node seed.js
-```
-Or run via Railway:
-```bash
+cd smart-hospital/backend
+railway login
 railway run node seed.js
+```
+
+### Option C — Local (if MongoDB is running locally)
+```bash
+cd smart-hospital/backend
+node seed.js
 ```
 
 ---
