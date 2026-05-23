@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Heart, Mail, Lock } from 'lucide-react';
 import { useAuth } from "../context/AuthContext";
 import toast from 'react-hot-toast';
-import API from '../utils/api';
+//import API from '../utils/api';
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
