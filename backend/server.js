@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
+const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 const { setupSocket } = require('./socket');
@@ -57,6 +58,20 @@ app.use('/api/audit', require('./routes/auditRoutes'));
 app.use('/api/queue', require('./routes/queueRoutes'));
 
 app.get('/api/seed', require('./controllers/seedController').seed);
+
+app.get('/api/check', (req, res) => {
+  const mongoState = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+  res.json({
+    success: true,
+    server: 'running',
+    mongoStatus: mongoState[mongoose.connection.readyState] || 'unknown',
+    mongoHost: mongoose.connection.host || 'not connected',
+    clientUrl: process.env.CLIENT_URL || 'not set',
+    hasMongoUri: !!process.env.MONGO_URI,
+    nodeEnv: process.env.NODE_ENV || 'development',
+    timestamp: new Date(),
+  });
+});
 
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: '🏥 Smart Hospital API is running!', timestamp: new Date() });

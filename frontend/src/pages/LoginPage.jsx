@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Heart, Mail, Lock } from 'lucide-react';
 import { useAuth } from "../context/AuthContext";
 import toast from 'react-hot-toast';
+import API from '../utils/api';
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -22,7 +23,11 @@ export default function LoginPage() {
       const paths = { patient: '/patient/dashboard', doctor: '/doctor/dashboard', admin: '/admin/dashboard', receptionist: '/receptionist/dashboard' };
       navigate(paths[data.user.role] || '/');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Login failed');
+      const msg = err.response?.data?.message;
+      if (msg) toast.error(msg);
+      else if (err.message === 'Network Error') toast.error('Cannot reach server. Check that Railway backend is running and REACT_APP_API_URL is set correctly.');
+      else toast.error('Login failed. Check console for details.');
+      console.error('Login error:', err);
     } finally { setLoading(false); }
   };
 
