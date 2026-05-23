@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Bell, CheckCheck, CalendarClock, CreditCard, Pill, FileText, X } from 'lucide-react';
+import { Bell, CheckCheck, CalendarClock, CreditCard, Pill, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import API from '../utils/api';
 import { Link } from 'react-router-dom';

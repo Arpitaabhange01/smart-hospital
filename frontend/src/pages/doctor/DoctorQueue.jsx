@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Users, SkipForward, Play, CheckCircle, XCircle, Clock, User, AlertTriangle } from 'lucide-react';
+import { Users, SkipForward, Play, CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react';
 import API from '../../utils/api';
 import { useSocket } from '../../context/SocketContext';
 import toast from 'react-hot-toast';
@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 export default function DoctorQueue() {
   const [queue, setQueue] = useState([]);
   const [todayCount, setTodayCount] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [calling, setCalling] = useState(false);
   const { socket } = useSocket();
 
@@ -16,7 +15,7 @@ export default function DoctorQueue() {
       const res = await API.get('/queue/doctor');
       setQueue(res.data.queue);
       setTodayCount(res.data.todayCount);
-    } catch {} finally { setLoading(false); }
+    } catch {}
   }, []);
 
   useEffect(() => { fetchQueue(); }, [fetchQueue]);

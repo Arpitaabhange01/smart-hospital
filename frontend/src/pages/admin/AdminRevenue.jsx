@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, TrendingDown, CalendarDays } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import API from '../../utils/api';
 
 const COLORS = ['#0f4c81', '#00c9a7', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
@@ -9,7 +9,6 @@ export default function AdminRevenue() {
   const [stats, setStats] = useState({ totalRevenue: 0, paidInvoices: 0, pendingInvoices: 0, totalInvoices: 0 });
   const [monthlyData, setMonthlyData] = useState([]);
   const [statusData, setStatusData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetch = async () => {
@@ -37,7 +36,7 @@ export default function AdminRevenue() {
         });
         setMonthlyData(Object.values(monthlyMap).sort((a, b) => a.month.localeCompare(b.month)));
         setStatusData(Object.entries(statusCounts).map(([name, value]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), value })));
-      } catch {} finally { setLoading(false); }
+      } catch {}
     };
     fetch();
   }, []);

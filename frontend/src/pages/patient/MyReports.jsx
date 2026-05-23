@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Download, Brain, Sparkles, AlertTriangle, X } from 'lucide-react';
+import { FileText, Brain, Sparkles, AlertTriangle, X, Download } from 'lucide-react';
 import API from '../../utils/api';
 import toast from 'react-hot-toast';
 

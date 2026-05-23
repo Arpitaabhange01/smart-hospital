@@ -9,7 +9,6 @@ export default function DispenseMedicine() {
   const [selectedPresc, setSelectedPresc] = useState(null);
   const [dispenseItems, setDispenseItems] = useState([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetch = async () => {
@@ -20,7 +19,7 @@ export default function DispenseMedicine() {
         ]);
         setPrescriptions(prescRes.data.prescriptions || []);
         setMedicines(medRes.data.medicines);
-      } catch {} finally { setLoading(false); }
+      } catch {}
     };
     fetch();
   }, []);

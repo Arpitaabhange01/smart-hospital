@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Clock, User, CheckCircle, MapPin, AlertTriangle, Loader } from 'lucide-react';
+import { CheckCircle, Loader } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import API from '../../utils/api';
 import { useSocket } from '../../context/SocketContext';
@@ -10,7 +10,6 @@ export default function PatientQueue() {
   const [position, setPosition] = useState(null);
   const [totalWaiting, setTotalWaiting] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showCheckin, setShowCheckin] = useState(false);
   const { socket } = useSocket();
 
   const fetchStatus = useCallback(async () => {
@@ -99,8 +98,7 @@ export default function PatientQueue() {
                 </motion.div>
               )}
 
-              <button onClick={() => setShowCheckin(false)}
-                className="mt-4 w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm font-medium">
+              <button className="mt-4 w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm font-medium">
                 ← Back to Doctors
               </button>
             </div>
@@ -119,7 +117,7 @@ export default function PatientQueue() {
           </motion.div>
         ) : (
           <motion.div key="checkin" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <DoctorsList onCheckin={() => { fetchStatus(); setShowCheckin(false); }} />
+            <DoctorsList onCheckin={() => { fetchStatus(); }} />
           </motion.div>
         )}
       </AnimatePresence>

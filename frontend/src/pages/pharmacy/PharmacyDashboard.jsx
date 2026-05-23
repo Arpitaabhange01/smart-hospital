@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Pill, Plus, Search, AlertTriangle, Edit2, Trash2, ChevronDown } from 'lucide-react';
+import { Pill, Plus, Search, AlertTriangle, Edit2, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import API from '../../utils/api';
 
@@ -9,11 +9,10 @@ export default function PharmacyDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({ name: '', genericName: '', category: 'Tablet', strength: '', manufacturer: '', price: '', stock: '', minStock: '10', unit: 'strip', requiresPrescription: true });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetch = async () => {
-      try { const res = await API.get('/pharmacy/medicines'); setMedicines(res.data.medicines); } catch {} finally { setLoading(false); }
+      try { const res = await API.get('/pharmacy/medicines'); setMedicines(res.data.medicines); } catch {}
     };
     fetch();
   }, []);

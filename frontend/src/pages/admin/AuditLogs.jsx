@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Search, Shield, Filter } from 'lucide-react';
+import { Search, Shield } from 'lucide-react';
 import API from '../../utils/api';
 
 export default function AuditLogs() {
   const [logs, setLogs] = useState([]);
   const [search, setSearch] = useState('');
   const [actionFilter, setActionFilter] = useState('');
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -15,7 +13,7 @@ export default function AuditLogs() {
         if (actionFilter) params.action = actionFilter;
         const res = await API.get('/audit', { params });
         setLogs(res.data.logs);
-      } catch {} finally { setLoading(false); }
+      } catch {}
     };
     fetch();
   }, [actionFilter]);
